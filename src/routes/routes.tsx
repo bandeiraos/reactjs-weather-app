@@ -1,21 +1,23 @@
 import {
-    Navigate
+    Navigate,
+    Routes,
+    Route
 } from "react-router-dom";
-import Forecasts from "../views/Forecasts.tsx";
-import ForecastCreate from '../views/ForecastCreate.tsx';
+import Forecasts from "../views/Forecasts";
+import ForecastCreate from '../views/ForecastCreate';
+import Layout from '../views/Layout';
 
-export default [
-    {
-        path: "/",
-        element: <Navigate to='/forecasts' />,
-        errorElement: "Page not found",
-    },
-    {
-        path: '/forecasts',
-        element: <Forecasts />
-    },
-    {
-        path: '/add-forecast',
-        element: <ForecastCreate />
-    },
-]
+const RoutesConf = () => {
+    return (
+        <Routes>
+            <Route path="/" element={<Layout />}>
+                <Route path="/" element={<Navigate to='/forecasts' />} />
+                <Route index path='/forecasts' element={<Forecasts />} />
+                <Route path='/add-forecast' element={<ForecastCreate />} />
+                <Route path="*" element={"Not Found"} />
+            </Route>
+        </Routes>
+    )
+}
+
+export default RoutesConf

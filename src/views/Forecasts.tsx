@@ -1,15 +1,19 @@
-import React from 'react'
-import { Link } from 'react-router-dom'
+import { observer } from 'mobx-react'
+import weatherStore from '../stores/weatherStore'
+import { IForecast } from '../types/definitions'
+import Card from '../components/Card'
+import PageTitle from '../components/PageTitle'
 
+const Forecasts = observer(() => {
 
-type Props = {}
-
-const Forecasts = (props: Props) => {
     return (
         <div>
-            <Link to={'/add-forecast'}>Create</Link>
+            <PageTitle title={"My Forecasts"} />
+            <ul>
+                {weatherStore.forecasts.map((forecast: IForecast) => <Card key={forecast.id} forecast={forecast} />)}
+            </ul>
         </div>
     )
-}
+})
 
 export default Forecasts
