@@ -1,19 +1,37 @@
-import { observer } from 'mobx-react'
-import weatherStore from '../stores/weatherStore'
-import { IForecast } from '../types/definitions'
-import Card from '../components/Card'
-import PageTitle from '../components/PageTitle'
+import { observer } from 'mobx-react';
+import weatherStore from '../stores/weatherStore';
+import { IForecast } from '../types/definitions';
+import Card from '../components/Card/Card';
+import PageTitle from '../components/PageTitle';
+import { Link } from 'react-router-dom';
 
-const Forecasts = observer(() => {
+const EmptyState: React.FC = (): React.ReactElement => {
+    return (
+        <div className='flex flex-col items-center text-gray-400 font-bold text-4xl text-center'>
+            <p>No forecasts available <span className='text-gray-300'>{":("}</span></p>
+            <p className='mt-4 lg:mt-1'>
+                Start by <Link className='underline text-gray-500' to='/add-forecast'>creating</Link> a new forecast!
+            </p>
+        </div>
+    );
+};
 
+const Forecasts: React.FC = observer((): React.ReactElement => {
     return (
         <div>
-            <PageTitle title={"My Forecasts"} />
-            <ul>
-                {weatherStore.forecasts.map((forecast: IForecast) => <Card key={forecast.id} forecast={forecast} />)}
-            </ul>
+            <PageTitle title="My Forecasts" />
+            <div className='flex flex-col lg:items-center'>
+                {
+                    !weatherStore.forecasts.length ? <EmptyState /> :
+                        <ul className='w-full'>
+                            {weatherStore.forecasts.map((forecast: IForecast) =>
+                                <Card key={forecast.id} forecast={forecast} isLoading={weatherStore.isLoading} />
+                            )}
+                        </ul>
+                }
+            </div>
         </div>
-    )
-})
+    );
+});
 
-export default Forecasts
+export default Forecasts;
