@@ -1,16 +1,15 @@
-import React from 'react'
-import ReactDOM from 'react-dom/client'
+import React from 'react';
+import ReactDOM from 'react-dom/client';
 import {
   BrowserRouter
-} from "react-router-dom";
-import Routes from './routes/routes.tsx';
-
-import './index.css'
+} from 'react-router-dom';
+import './index.css';
+import RoutesConf from './routes/RoutesConf';
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>
     <BrowserRouter>
-      <Routes />
+      <RoutesConf />
     </BrowserRouter>
   </React.StrictMode>,
-)
+);

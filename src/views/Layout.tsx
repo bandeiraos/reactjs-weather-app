@@ -22,7 +22,7 @@ const toggleScrollBtn = (): void => {
     }
 };
 
-const useScrollToggle = () => {
+const useScrollToggle = (): void => {
     useEffect(() => {
         document.addEventListener('scroll', toggleScrollBtn);
 
@@ -43,7 +43,8 @@ const Toasts: React.FC = observer((): React.ReactElement | null => {
                     <div
                         key={toast.id.toString()}
                         className={clsx('py-2 px-9 mt-2 text-center rounded-lg text-white',
-                            toast.status === 'success' ? 'bg-green-500' : 'bg-blue-300'
+                            toast.status === 'success' ? 'bg-green-500' :
+                                toast.status === 'info' ? 'bg-blue-300' : 'bg-red-600'
                         )}
                     >
                         {toast.msg}
@@ -89,7 +90,7 @@ const Nav: React.FC = (): React.ReactElement => {
     );
 };
 
-const PageWraper: React.FC = (): React.ReactElement => {
+const PageWrapper: React.FC = (): React.ReactElement => {
     return (
         <div className='mt-4 flex-col p-10 lg:mx-auto lg:w-[904px]'>
             <Outlet />
@@ -105,7 +106,7 @@ const Layout: React.FC = (): React.ReactElement => {
         <div className='flex flex-col relative'>
             <Nav />
             <Toasts />
-            <PageWraper />
+            <PageWrapper />
             <ScrollToTopBtn />
         </div>
     );

@@ -1,8 +1,8 @@
 import { observer } from 'mobx-react';
 import weatherStore from '../stores/weatherStore';
 import { IForecast } from '../types/definitions';
-import Card from '../components/Card/Card';
-import PageTitle from '../components/PageTitle';
+import Card from '../components/card/Card';
+import { PageTitle } from '../components/misc/Misc';
 import { Link } from 'react-router-dom';
 
 const EmptyState: React.FC = (): React.ReactElement => {

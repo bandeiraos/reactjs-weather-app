@@ -4,30 +4,41 @@ const URL: string = `https://api.open-meteo.com/v1/forecast?`;
 const DEFAULT_PARAMS: string = `current=is_day,weather_code,temperature_2m,precipitation_probability,wind_speed_10m,wind_direction_10m&daily=weather_code,temperature_2m_max,temperature_2m_min,`;
 const CONFIG_PARAMS: string = '&timezone=America%2FSao_Paulo&forecast_days=4';
 
-function generateUrl(lat: string, lon: string, options: string[]): string {
+const generateUrl = (lat: string, lon: string, options: string[]): string => {
     const optionsUrl: string = options.join(',');
 
     return `${URL}latitude=${lat}&longitude=${lon}&${DEFAULT_PARAMS}${optionsUrl}${CONFIG_PARAMS}`;
-}
+};
 
-export async function fetchData(
+const handleFetchDataError = (toastFn: (toast: IMessageFeedback) => void) => {
+    toastFn({
+        msg: 'Failed to retrieve data. Try again later.',
+        status: 'error'
+    });
+};
+
+const fetchData = async (
     lat: string,
     lon: string,
     customDailyOptions: string[],
     toastFn: (toast: IMessageFeedback) => void
-): Promise<void> {
-    const url: string = generateUrl(lat, lon, customDailyOptions),
-        response: Response = await fetch(url),
-        data: IForecastRaw = await response.json(),
-        forecastData: IForecast = { ...data, id: `${lat},${lon}`, customOptions: customDailyOptions };
+): Promise<void> => {
+    const url: string = generateUrl(lat, lon, customDailyOptions);
+    try {
+        const response: Response = await fetch(url),
+            data: IForecastRaw = await response.json(),
+            forecastData: IForecast = { ...data, id: `${lat},${lon}`, customOptions: customDailyOptions };
 
-    prepareDataToSave(forecastData, toastFn);
-}
+        prepareDataToSave(forecastData, toastFn);
+    } catch (_) {
+        handleFetchDataError(toastFn);
+    }
+};
 
-function prepareDataToSave(
+const prepareDataToSave = (
     forecastData: IForecast,
     toastFn: (toast: IMessageFeedback) => void
-): void {
+): void => {
     const storedForecasts: string | null = localStorage.getItem('forecasts');
 
     let newForecasts: IForecast[] | [] = [],
@@ -59,8 +70,10 @@ function prepareDataToSave(
 
     toastFn(messageFeedback);
     saveForecasts(newForecasts);
-}
+};
 
-export async function saveForecasts(forecasts: IForecast[]) {
+const saveForecasts = async (forecasts: IForecast[]) => {
     localStorage.setItem('forecasts', JSON.stringify(forecasts));
-}
+};
+
+export { fetchData, saveForecasts };

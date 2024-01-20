@@ -1,3 +1,4 @@
+import React from "react";
 import {
     Navigate,
     Routes,
@@ -7,7 +8,7 @@ import Forecasts from "../views/Forecasts";
 import ForecastCreate from '../views/ForecastCreate';
 import Layout from '../views/Layout';
 
-const RoutesConf = () => {
+const RoutesConf: React.FC = (): React.ReactElement => {
     return (
         <Routes>
             <Route path="/" element={<Layout />}>
@@ -17,7 +18,7 @@ const RoutesConf = () => {
                 <Route path="*" element={"Not Found"} />
             </Route>
         </Routes>
-    )
-}
+    );
+};
 
-export default RoutesConf
+export default RoutesConf;

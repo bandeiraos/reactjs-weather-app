@@ -1,7 +1,7 @@
 import React, { ReactNode } from 'react';
 import { observer } from 'mobx-react';
 import weatherStore from '../stores/weatherStore';
-import PageTitle from '../components/PageTitle';
+import { PageTitle } from '../components/misc/Misc';
 import clsx from 'clsx';
 
 const Label: React.FC<{ title: string, children?: ReactNode, className?: string; }> = ({ title, children, className }): React.ReactElement => (

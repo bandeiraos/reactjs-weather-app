@@ -3,8 +3,8 @@ import { fetchData, saveForecasts } from "../api/api";
 import { IWeatherStore, IForecast, IMessageFeedback, IToast } from "../types/definitions";
 
 class WeatherStore implements IWeatherStore {
-    latitude: string = '-23.5558';
-    longitude: string = '-46.6396';
+    latitude: string = '';
+    longitude: string = '';
     isLoading: boolean | string = false;
     forecasts: IForecast[] = [];
     customDailyOptions: string[] = [];
