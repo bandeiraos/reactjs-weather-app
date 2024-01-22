@@ -1,4 +1,4 @@
-# Weather app
+# Weather App w/ Open Meteo API
 
 <img src="https://github.com/bandeiraos/reactjs-weather-app/assets/15945788/e3078cd9-63e8-416b-9c18-4bc9d3b30bd5" alt="weather" width="500" />
 
