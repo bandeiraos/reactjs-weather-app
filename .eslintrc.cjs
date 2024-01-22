@@ -10,19 +10,19 @@ module.exports = {
   parser: '@typescript-eslint/parser',
   plugins: ['react-refresh'],
   rules: {
-    // "@typescript-eslint/explicit-function-return-type": "off",
+    "@typescript-eslint/explicit-function-return-type": "off",
     'react-refresh/only-export-components': [
       'warn',
       { allowConstantExport: true },
     ],
   },
-  // "overrides": [
-  //   {
-  //     // enable the rule specifically for TypeScript files
-  //     "files": ["*.ts", "*.mts", "*.cts", "*.tsx"],
-  //     "rules": {
-  //       "@typescript-eslint/explicit-function-return-type": "error"
-  //     }
-  //   }
-  // ]
-}
+  "overrides": [
+    {
+      // enable the rule specifically for TypeScript files
+      "files": ["*.ts", "*.mts", "*.cts", "*.tsx"],
+      "rules": {
+        "@typescript-eslint/explicit-function-return-type": "error"
+      }
+    }
+  ]
+};

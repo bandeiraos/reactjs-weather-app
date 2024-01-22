@@ -1,36 +1,20 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import clsx from 'clsx';
 import { observer } from 'mobx-react';
 import { NavLink, Outlet } from 'react-router-dom';
 import weatherStore from '../stores/weatherStore';
 import { IToast } from '../types/definitions';
+import { useScrollToggle } from '../hooks/hooks';
 
-const pages = [
+type PagesType = {
+    path: string,
+    text: string;
+};
+
+const pages: PagesType[] = [
     { path: '/forecasts', text: 'List' },
     { path: '/add-forecast', text: 'Add' },
 ];
-
-const toggleScrollBtn = (): void => {
-    const btn = document.getElementById("scrollToTopBtn");
-
-    if (window.scrollY > 80) {
-        btn?.classList.add('flex');
-        btn?.classList.remove('hidden');
-    } else {
-        btn?.classList.add('hidden');
-        btn?.classList.remove('flex');
-    }
-};
-
-const useScrollToggle = (): void => {
-    useEffect(() => {
-        document.addEventListener('scroll', toggleScrollBtn);
-
-        () => {
-            document.removeEventListener('scroll', toggleScrollBtn);
-        };
-    }, []);
-};
 
 const Toasts: React.FC = observer((): React.ReactElement | null => {
     const { toastsQueue } = weatherStore;
@@ -38,7 +22,7 @@ const Toasts: React.FC = observer((): React.ReactElement | null => {
     if (!toastsQueue.length) return null;
     return (
         <div className='top-[98px] fixed w-full flex flex-col items-center z-10'>
-            {weatherStore.toastsQueue.map((toast: IToast) => {
+            {toastsQueue.map((toast: IToast) => {
                 return (
                     <div
                         key={toast.id.toString()}
@@ -55,7 +39,7 @@ const Toasts: React.FC = observer((): React.ReactElement | null => {
     );
 });
 
-const ScrollToTopBtn: React.FC = (): React.ReactElement => {
+const ScrollToTopBtn: React.FC = () => {
     return (
         <div className='fixed bottom-5 justify-center w-full hidden' id="scrollToTopBtn">
             <button
@@ -71,7 +55,7 @@ const ScrollToTopBtn: React.FC = (): React.ReactElement => {
     );
 };
 
-const Nav: React.FC = (): React.ReactElement => {
+const Nav: React.FC = () => {
     return (
         <nav className='w-full p-4 border-b-2 flex flex-col items-center'>
             <div>
@@ -90,7 +74,7 @@ const Nav: React.FC = (): React.ReactElement => {
     );
 };
 
-const PageWrapper: React.FC = (): React.ReactElement => {
+const PageWrapper: React.FC = () => {
     return (
         <div className='mt-4 flex-col p-10 lg:mx-auto lg:w-[904px]'>
             <Outlet />
@@ -98,8 +82,7 @@ const PageWrapper: React.FC = (): React.ReactElement => {
     );
 };
 
-
-const Layout: React.FC = (): React.ReactElement => {
+const Layout: React.FC = () => {
     useScrollToggle();
 
     return (

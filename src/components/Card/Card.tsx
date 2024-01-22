@@ -9,8 +9,7 @@ type Props = {
     isLoading: string | boolean;
 };
 
-
-const Card: React.FC<Props> = observer(({ forecast, isLoading }): React.ReactElement => {
+const Card: React.FC<Props> = observer(({ forecast, isLoading }) => {
     return (
         <li className='mb-10 w-full max-w-screen-lg'>
             <div className='flex flex-wrap'>

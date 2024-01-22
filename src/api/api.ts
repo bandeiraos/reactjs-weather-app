@@ -10,7 +10,7 @@ const generateUrl = (lat: string, lon: string, options: string[]): string => {
     return `${URL}latitude=${lat}&longitude=${lon}&${DEFAULT_PARAMS}${optionsUrl}${CONFIG_PARAMS}`;
 };
 
-const handleFetchDataError = (toastFn: (toast: IMessageFeedback) => void) => {
+const handleFetchDataError = (toastFn: (toast: IMessageFeedback) => void): void => {
     toastFn({
         msg: 'Failed to retrieve data. Try again later.',
         status: 'error'
@@ -27,7 +27,7 @@ const fetchData = async (
     try {
         const response: Response = await fetch(url),
             data: IForecastRaw = await response.json(),
-            forecastData: IForecast = { ...data, id: `${lat},${lon}`, customOptions: customDailyOptions };
+            forecastData: IForecast = { ...data, id: `${data.latitude},${data.longitude}`, customOptions: customDailyOptions };
 
         prepareDataToSave(forecastData, toastFn);
     } catch (_) {
@@ -72,7 +72,7 @@ const prepareDataToSave = (
     saveForecasts(newForecasts);
 };
 
-const saveForecasts = async (forecasts: IForecast[]) => {
+const saveForecasts = async (forecasts: IForecast[]): Promise<void> => {
     localStorage.setItem('forecasts', JSON.stringify(forecasts));
 };
 

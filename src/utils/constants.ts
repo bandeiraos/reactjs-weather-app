@@ -1,4 +1,6 @@
-export const weatherCodeInfo = [
+import { IWeatherCodeInfo } from "../types/definitions";
+
+export const weatherCodeInfo: IWeatherCodeInfo[] = [
     {
         "code": 0,
         "text": "Clear sky",
@@ -167,4 +169,4 @@ export const weatherCodeInfo = [
         "iconD": "http://openweathermap.org/img/wn/11d@2x.png",
         "iconN": "http://openweathermap.org/img/wn/11n@2x.png"
     }
-]
+];

@@ -8,7 +8,7 @@ import Forecasts from "../views/Forecasts";
 import ForecastCreate from '../views/ForecastCreate';
 import Layout from '../views/Layout';
 
-const RoutesConf: React.FC = (): React.ReactElement => {
+const RoutesConf: React.FC = () => {
     return (
         <Routes>
             <Route path="/" element={<Layout />}>

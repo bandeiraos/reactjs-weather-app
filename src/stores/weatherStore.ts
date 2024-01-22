@@ -13,7 +13,7 @@ class WeatherStore implements IWeatherStore {
     constructor() {
         makeAutoObservable(this);
 
-        this.getForecasts();
+        this.getForecastsFromStoreage();
     }
 
     setLatitude = (value: string): void => {
@@ -32,11 +32,15 @@ class WeatherStore implements IWeatherStore {
         }
     };
 
-    getForecasts = (): void => {
+    getForecastsFromStoreage = (): void => {
         const localStorageForecasts: string | null = localStorage.getItem('forecasts');
 
         if (localStorageForecasts)
             this.forecasts = JSON.parse(localStorageForecasts);
+    };
+
+    getForecastsList = (): IForecast[] => {
+        return this.forecasts.slice().reverse();
     };
 
     createForecast = async (): Promise<void> => {
@@ -45,7 +49,7 @@ class WeatherStore implements IWeatherStore {
         await fetchData(this.latitude, this.longitude, this.customDailyOptions, this.showToastMsg);
 
         runInAction(() => {
-            this.getForecasts();
+            this.getForecastsFromStoreage();
             this.isLoading = false;
         });
     };
@@ -59,25 +63,25 @@ class WeatherStore implements IWeatherStore {
         await fetchData(lat, lon, customOptions, this.showToastMsg);
 
         runInAction(() => {
-            this.getForecasts();
+            this.getForecastsFromStoreage();
             this.isLoading = false;
         });
     };
 
-    removeForecast = (id: string) => {
+    removeForecast = (id: string): void => {
         const newForecasts: IForecast[] = this.forecasts.filter((fs: IForecast) => fs.id !== id);
 
         saveForecasts(newForecasts);
         this.forecasts = newForecasts;
     };
 
-    showToastMsg = (toast: IMessageFeedback) => {
+    showToastMsg = (toast: IMessageFeedback): void => {
         const id = Math.random();
         const t = { ...toast, id };
         runInAction(() => this.toastsQueue.push(t));
         setTimeout(() => {
             runInAction(() => this.toastsQueue = this.toastsQueue.filter(tq => tq.id !== id));
-        }, 2000);
+        }, 1500);
     };
 }
 
